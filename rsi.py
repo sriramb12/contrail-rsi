@@ -1,4 +1,18 @@
 #!/usr/bin/python
+###############################################################
+#
+# Contrail rsi tool for collecting a node information
+# Usage:
+#    ./rsi.py <node ip>
+#  Ex: 
+#      ./rsi.py 10.219.90.82
+#  Output:
+#     collects specified commands( see scripts/ folder within)
+#     as a compressed tar file 
+#        saves it locally rsi-<ddMMMyy-hhmmss>.tgz
+#     Ex: rsi-20Mar18-121953.tgz  
+###############################################################
+
 import os
 import sys
 import getpass
