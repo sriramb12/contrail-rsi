@@ -21,7 +21,6 @@ import paramiko
 from paramiko import SSHClient
 from scp import SCPClient
 
-print " welcome to RSI Extracter"
 
 archivedir='scripts'
 archive='scripts.tar'
