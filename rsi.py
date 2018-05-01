@@ -32,11 +32,61 @@ def printout(f):
  for line in f:
    print line
 
+def checkPing(host):
+    response = os.system("ping -c 1 -t2 " + host + "> /dev/null")
+    # and then check the response...
+    if response == 0:
+        pingstatus = True
+    else:
+        pingstatus = False
+
+    return pingstatus 
+
+def checkServer(server, user, pwd, chkcmd):
+ if not checkPing(server):
+  print server, 'not reachable?'
+  print 'exiting'
+  exit(0)    
+ proxy = None
+ ssh = paramiko.SSHClient()
+ ssh.load_system_host_keys()
+ ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+ try:
+   ssh.connect(server, username=user, password=pwd, timeout=2)
+   stdin, stdout, stderr = ssh.exec_command(chkcmd)
+ 
+   for line in stderr:
+     if 'not' in line:
+       print server, 'is not a contrail node?'
+       ssh.close()
+       return False
+   c=0
+   for line in stdout:
+     c+=1
+   if not c:
+       print server, 'is not running contrail services?'
+       ssh.close()
+       return False
+   print server, 'is a contrail node'
+   return True
+   
+   return True
+ except paramiko.AuthenticationException:
+   print("Authentication failed?")
+   return False
+ except:
+   print("unknown error")
+   print server, 'is a contrail node?'
+   return False
+ ssh.close()
+
 def runRsi(server, file, user, pwd):
  global tenantcred
+ proxy = None
  ssh = paramiko.SSHClient()
- ssh.known_hosts = None
+ #ssh.known_hosts = None
  ssh.load_system_host_keys()
+ ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
  ssh.connect(server, username=user, password=pwd)
 
  # SCPClient takes a paramiko transport as its only argument
@@ -77,15 +127,6 @@ if not checkScripts():
  exit(0)
 user='root'
 server=''
-def check_ping(host):
-    response = os.system("ping -c 1 -t2 " + host + "> /dev/null")
-    # and then check the response...
-    if response == 0:
-        pingstatus = True
-    else:
-        pingstatus = False
-
-    return pingstatus 
 
 if len(sys.argv) < 2:
    print 'Enter Node FQDN/Address:',
@@ -94,16 +135,21 @@ if len(sys.argv) < 2:
 else:
    server = sys.argv[1]
 
-if not check_ping(server):
-  print server, 'not reachable?'
-  print 'exiting'
-  exit(0)    
 user = 'root'
-print 'logging to', server
-#pwd = getpass.getpass()
+#Comment this line
 pwd = 'Juniper'
+#Uncomment this line
+#pwd = getpass.getpass()
+print 'Note: password is hardcoded! use getpass()'
+print 'logging to', server
+
+
 
 
 os.system('tar cf ' + archive + ' scripts/')
 
-runRsi(server, archive, user, pwd)
+if checkServer(server, user, pwd, 'contrail-status'):
+  print "OK"
+  runRsi(server, archive, user, pwd)
+else:
+  print('exiting');
