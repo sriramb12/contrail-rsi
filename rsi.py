@@ -14,6 +14,7 @@
 ###############################################################
 
 import os
+import time
 import sys
 import getpass
 import os.path
@@ -96,6 +97,7 @@ def runRsi(server, file, user, pwd):
  targetfile='/root/rsi/'+file
   
  scp.put(file, targetfile)
+ rsiFileName = str(int(time.time()))+'.tgz'
  if os.path.isfile(tenantcred):
    scp.put(file, tenantcred)
  
@@ -106,12 +108,10 @@ def runRsi(server, file, user, pwd):
  stdout = ssh.exec_command('tar xf ' + targetfile + ' -C rsi/ >> rsi/rsi.log')
  stdout = ssh.exec_command('rsi/scripts/rsi.sh')[1]
  printout(stdout)
- scp.get('/root/rsi/rsi.tgz', 'rsicollected.tgz')
+ scp.get('/root/rsi/rsi.tgz', str(rsiFileName))
  stdout = ssh.exec_command('rm /root/rsi/rsi.tgz')
  stdout = ssh.exec_command('rm /root/rsi/rsi.tar')
- print('Rsi collected and extracted as following :')
- os.system('tar --strip-components 1 -zxvf ' +'rsicollected.tgz') 
- os.system('rm rsicollected.tgz')
+ print('Rsi collected to :', rsiFileName)
  os.system('rm -rf /root/rsi/scripts')
 
  #stderr = ssh.exec_command('bash test.sh')[2]
@@ -136,12 +136,14 @@ if len(sys.argv) < 2:
 else:
    server = sys.argv[1]
 
+targetfile=int(time.time() )
+print targetfile
 user = 'root'
 #Comment this line
 pwd = 'Juniper'
 #Uncomment this line
 #pwd = getpass.getpass()
-print 'Note: password is hardcoded! use getpass()'
+print 'Warning: password is hardcoded! use getpass()'
 print 'logging to', server
 
 
