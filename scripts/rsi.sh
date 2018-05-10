@@ -8,7 +8,7 @@ scriptDir=$ROOT_DIR/scripts
 monitorDir=/var/log/monitor
 
 #comment this line!!
-rm -rf $ROOT_DIR/rsi-*
+#rm -rf $ROOT_DIR/rsi-*
 
 start=`date +%s`
 date >> $RSILOG 
@@ -97,7 +97,7 @@ narrate "Step 1.b: Fetch recent logs"
   getLatestLogs $outputDir
 
 narrate "Step 1.c: Fetch /etc/"
-getConfig
+  getConfig
 
 narrate "Step 2: Getting contrail roles"
 #Step 2: Find what rolea are running
@@ -122,12 +122,12 @@ do
     narrate  === 
   done
 done
-end=`date +%s`
-runtime=`expr $end - $start`
-
-narrate "finished contrail-rsi in $runtime seconds"
 
 #Step 3: create a tar(zipped) file
-tar Pcf $outputDir.tar $outputDir
-narrate "$outputDir.tar created"
+end=`date +%s`
+runtime=`expr $end - $start`
+narrate "finished contrail-rsi in $runtime seconds"
 
+tar zcf $outputDir.tgz $outputDir
+ls -lh $outputDir.tgz >> $RSILOG
+rm -rf $outputDir
