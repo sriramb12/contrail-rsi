@@ -3,3 +3,4 @@ echo running config-commands
 #zk
 echo stat | nc localhost 2181
 keystone --os-username ADMIN --os-password contrail123 --os-auth-url http://192.168.10.81:5000/v2.0/ tenant-list
+nova  --os-username ADMIN --os-password contrail123 --os-auth-url list 

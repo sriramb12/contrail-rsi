@@ -8,7 +8,7 @@ scriptDir=$ROOT_DIR/scripts
 monitorDir=/var/log/monitor
 
 #comment this line!!
-#rm -rf $ROOT_DIR/rsi-*
+rm -rf $ROOT_DIR/rsi-*
 
 start=`date +%s`
 date >> $RSILOG 
@@ -115,7 +115,11 @@ do
   mkdir $roledir
   file=$roledir/$role.txt
   date >> $file
-  for cmdfile in `ls $scriptDir/$role/*sh`
+  for cmdfile in `ls $scriptDir/$role/*.sh`
+  do
+    bash $cmdfile $outputDir
+  done
+  for cmdfile in `ls $scriptDir/$role/*cmds`
   do
     narrate "Running $cmdfile"
     runCmdFile $cmdfile  $roledir
@@ -128,6 +132,6 @@ end=`date +%s`
 runtime=`expr $end - $start`
 narrate "finished contrail-rsi in $runtime seconds"
 
-tar zcf $outputDir.tgz $outputDir
-ls -lh $outputDir.tgz >> $RSILOG
-rm -rf $outputDir
+#tar zcf $outputDir.tgz $outputDir
+#ls -lh $outputDir.tgz >> $RSILOG
+#rm -rf $outputDir

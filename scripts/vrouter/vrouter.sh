@@ -1,13 +1,15 @@
 dir=$1
 echo $dir
 file=$dir/vrouter.txt
-log=$dir/rsi.log
-echo Running vrouter.sh >> $log
+log="$dir/rsi.log"
+runlog=$dir/summary.log
+errlog=$dir/vrouter/err.txt
+echo `date` Running vrouter.sh | tee  $log $file $errlog >/dev/null
 
-
+exit
+vrinf=$1/vrouter/vrouter.txt
 function getFlowSummary()
 {
-  vrinf=$1
   echo runcmd:flow -s `date` >> $vrinf
   flow -s >> $vrinf &
   sleep 6

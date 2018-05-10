@@ -1,13 +1,13 @@
-dropstats >> $1
-top -d2 -n1 -b | head -12  >> $1
-vif --list >> $1
-vrfstats --dump >> $1
-flow -l >> $1
-mpls --dump >> $1
-mirror --dump >> $1
-vxlan --dump >> $1
-nh --list >> $1
-echo endof cmds >> $1
+dropstats
+top -d2 -n1 -b | head -12 
+vif --list
+vrfstats --dump
+flow -l
+mpls --dump
+mirror --dump
+vxlan --dump
+nh --list
+echo endof cmds
 curl http://localhost:8085/Snh_VrfListReq?name=
 sysctl -a
-echo ===== >> $1
+dmesg
