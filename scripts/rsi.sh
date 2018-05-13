@@ -2,13 +2,14 @@
 ROOT_DIR=/root/rsi
 RSILOG=$ROOT_DIR/rsi.log
 ts=rsi-`date +%d%b%y-%H%M%S`
-outputDir=$ROOT_DIR/$ts
+outputDir=$ROOT_DIR/$1
+
 RUNLOG=$outputDir/summary.txt
 scriptDir=$ROOT_DIR/scripts
 monitorDir=/var/log/monitor
 
 #comment this line!!
-rm -rf $ROOT_DIR/rsi-*
+#rm -rf $ROOT_DIR/rsi-*
 
 start=`date +%s`
 date >> $RSILOG 
@@ -132,6 +133,9 @@ end=`date +%s`
 runtime=`expr $end - $start`
 narrate "finished contrail-rsi in $runtime seconds"
 
-#tar zcf $outputDir.tgz $outputDir
-#ls -lh $outputDir.tgz >> $RSILOG
+mv $scriptDir  $outputDir
+cd $ROOT_DIR
+tar zcf $1.tgz $1
+ls -lh $outputDir.tgz >> $RSILOG
 #rm -rf $outputDir
+touch $ROOT_DIR/Finished

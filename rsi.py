@@ -30,10 +30,6 @@ archive='scripts.tar'
 #for now, specific tenant information is captured
 tenantcred='tenant.cred'
 
-def printout(f):
- for line in f:
-   print line
-
 def checkPing(host):
     response = os.system("ping -c 1 -t2 " + host + "> /dev/null")
     # and then check the response...
@@ -82,37 +78,58 @@ def checkServer(server, user, pwd, chkcmd):
    return False
  ssh.close()
 
+def cleanup():
+#remove local scripts tarball
+  os.system('rm -rf scripts.tar')
+  os.system('rm -rf /root/rsi/scripts')
+ 
 def runRsi(server, file, user, pwd):
  global tenantcred
  proxy = None
  ssh = paramiko.SSHClient()
- #ssh.known_hosts = None
  ssh.load_system_host_keys()
  ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
  ssh.connect(server, username=user, password=pwd)
 
  # SCPClient takes a paramiko transport as its only argument
  scp = SCPClient(ssh.get_transport())
- stdout = ssh.exec_command('mkdir -p rsi 2>>/tmp/err')
+ out = ssh.exec_command('mkdir -p rsi 2>>/tmp/err')
+ out = ssh.exec_command('hostname')[1]
+ hostname = out.readlines()[0].rstrip()
  targetfile='/root/rsi/'+file
-  
  scp.put(file, targetfile)
- rsiFileName = str(int(time.time()))+'.tgz'
+ rsiFolderNamw = hostname+'-'+str(int(time.time()))
+
  if os.path.isfile(tenantcred):
    scp.put(file, tenantcred)
  
  
- #remove local scripts tarball
- os.system('rm scripts.tar')
- 
- stdout = ssh.exec_command('tar xf ' + targetfile + ' -C rsi/ >> rsi/rsi.log')
- stdout = ssh.exec_command('rsi/scripts/rsi.sh')[1]
- printout(stdout)
- scp.get('/root/rsi/rsi.tgz', str(rsiFileName))
- stdout = ssh.exec_command('rm /root/rsi/rsi.tgz')
- stdout = ssh.exec_command('rm /root/rsi/rsi.tar')
- print('Rsi collected to :', rsiFileName)
- os.system('rm -rf /root/rsi/scripts')
+ stdout = ssh.exec_command('rm /root/rsi/Finished')
+ stdin,stdout,stderr = ssh.exec_command('tar xf ' + targetfile + ' -C rsi/')
+ stdout = ssh.exec_command('rsi/scripts/rsi.sh ' + rsiFolderNamw)[1]
+ rsiFileName = rsiFolderNamw+'.tgz'
+ remFileName= '/root/rsi/' + rsiFileName 
+ stdoutlen = 0
+ waitTime = 60
+ #while not stdoutlen and retries < 20:
+ done = False
+ while waitTime:
+    try:
+       stdin, stdout, stderr = ssh.exec_command('ls -l ' + '/root/rsi/Finished')
+       stdout.readlines()[0]  
+    except IndexError:
+       waitTime -=2
+       time.sleep(2) 
+    else:
+      scp.get('rsi/'+rsiFileName, './'+rsiFileName)
+      print 'RSI saved to: ', rsiFileName
+      out = ssh.exec_command('rm /root/rsi/Finished')
+      out = ssh.exec_command('rm -rf /root/rsi/' + rsiFolderNamw)
+      out = ssh.exec_command('rm -rf /root/rsi/scripts.tar')
+      out = ssh.exec_command('rm -rf /root/rsi/scripts')
+      return True
+ print 'RSI session hung?'
+ return False
 
  #stderr = ssh.exec_command('bash test.sh')[2]
 
@@ -153,6 +170,10 @@ os.system('tar cf ' + archive + ' scripts/')
 
 if checkServer(server, user, pwd, 'contrail-status'):
   print "OK"
-  runRsi(server, archive, user, pwd)
+  status = False
+  while not status:
+     status = runRsi(server, archive, user, pwd)
 else:
   print('exiting');
+
+cleanup()
