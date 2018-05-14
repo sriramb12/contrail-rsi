@@ -158,8 +158,8 @@ print targetfile
 user = 'root'
 #Comment this line
 pwd = 'Juniper'
-#Uncomment this line
-#pwd = getpass.getpass()
+if not pwd:
+ pwd = getpass.getpass()
 print 'Warning: password is hardcoded! use getpass()'
 print 'logging to', server
 
