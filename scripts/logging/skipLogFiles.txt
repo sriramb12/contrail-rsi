@@ -1,0 +1,7 @@
+contrail-analytics-nodemgr-stdout.log
+contrail-config-nodemgr-stdout.log
+contrail-control-nodemgr-stdout.log
+contrail-database-nodemgr-stdout.log
+haproxy.log
+device-manager-zk.log
+contrail-analytics-nodemgr-stderr.log
