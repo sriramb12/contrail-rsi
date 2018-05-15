@@ -5,3 +5,7 @@ contrail-database-nodemgr-stdout.log
 haproxy.log
 device-manager-zk.log
 contrail-analytics-nodemgr-stderr.log
+memcached.log
+opscenterd.log
+redis-server.log
+contrail-control-nodemgr-stderr.log

@@ -1,0 +1,9 @@
+/var/log/cassandra/status.log: "run_command", "DEBUG"
+/var/log/contrail/ifmap-stdout.log: "SessionRepository", "TRACE", "DEBUG"
+/var/log/contrail/svc-monitor-zk.log: "Sending request", "Received Ping"
+/var/log/cassandra/repair-dm_keyspace.log: "pro"
+/var/log/cassandra/repair-svc_monitor_keyspace.log: "progress"
+/var/log/cassandra/repair-DISCOVERY_SERVER.log: "progress"
+/var/log/cassandra/repair-to_bgp_keyspace.log: "progress"
+
+/var/log/haproxy.log: "backend", "contrail-analytics-api contrail-analytics-api", "contrail-discovery contrail-discovery-backend"
