@@ -1,0 +1,23 @@
+#1. There are several log files which need analysis  and specific processing to make the case analysis quicker and efficient
+Several approaches are possible. 
+
+distributed model 
+   a log processor (a cron job) will routinely crunch the data from a node to a local place (using sliding window)
+the RSI can pull this information directly
+  It will apply some rules and exclusion lists to crunch (remove known noise) 
+This will prevent any log roll over
+
+raw model
+  RSI tool will apply some rules and exclusion lists at the time of execution of the RSI script
+It can be lossy, as the incident can happen any time and the delay in executing RSI can cause roll over of a log file
+
+/var/log/opscenter/opscenterd.log
+/var/log/auth.log
+/var/log/kafka/kafkaServer-gc.log: moderate
+/var/log/kafka/state-change.log: moderate
+/var/log/cassandra/debug.log : too noisy.. tunable?
+/var/log/zookeeper/zookeeper.log: moderate
+/var/log/contrail/contrail-analytics-api.log: moderate
+
+
+

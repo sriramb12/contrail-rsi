@@ -5,5 +5,10 @@
 /var/log/cassandra/repair-svc_monitor_keyspace.log: "progress"
 /var/log/cassandra/repair-DISCOVERY_SERVER.log: "progress"
 /var/log/cassandra/repair-to_bgp_keyspace.log: "progress"
+/var/log/cassandra/repair-useragent.log: "progress"
+/var/log/cassandra/repair-config_db_uuid.log: "progress"
+/var/log/cassandra/system.log: "INFO"
+/var/log/kafka/server.log: "Group Metadata Manager on Broker"
+/var/log/zookeeper/zookeeper.log: "Purge task"
 
 /var/log/haproxy.log: "backend", "contrail-analytics-api contrail-analytics-api", "contrail-discovery contrail-discovery-backend"

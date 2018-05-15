@@ -18,15 +18,27 @@ logFileSizeThreshold = 10*1024
 import os
 import sys
 
-try:
- if len(sys.argv) < 2:
-  exit(0) 
- folder= sys.argv[1] + '/'
- Folder= sys.argv[1] + '/'
- os.system("mkdir " + folder)
-except:
- print 'mkdir exception'
- exit(0)
+def usage():
+  print "Usage:"
+  print "   python ", sys.argv[0], "-d <outputdir>"
+  print
+  exit(0)
+debug=False
+if len(sys.argv) < 2 or len(sys.argv) > 3:
+    usage()
+if len(sys.argv) == 2:
+    if sys.argv[1][0] == '-':
+      usage()
+    folder= sys.argv[1] + '/'
+    Folder= sys.argv[1] + '/'
+if len(sys.argv) > 2:
+    if sys.argv[1] != '-d':
+      usage()
+    folder= sys.argv[2] + '/'
+    Folder= sys.argv[2] + '/'
+    print "debug on"
+    debug = True
+os.system("mkdir " + folder)
 
 logFilters = {}
 
@@ -50,7 +62,7 @@ prefix = "/var/log/"
 copyCount = 0
 filterLogFileList=[]
 for root, dirs, files in os.walk(prefix):
-    folder= sys.argv[1]
+    folder= Folder
     folder += os.path.join(root, '')
     cmd = "mkdir -p " + folder 
     
@@ -67,6 +79,7 @@ for root, dirs, files in os.walk(prefix):
             os.system(cmd)
             copyCount += 1
           #  print cmd, "copied ", l
+            #if debug:
             os.system("ls -l " + l )
         os.system("ls -l " + l + " >> " + Folder + logFileList)
 
@@ -74,7 +87,7 @@ print 'number of files for copy:', len(logFileList)
 print 'number of filter files found ', len(filterLogFileList)
 
 
-folder= sys.argv[1]
+folder= Folder
 count = 0
 for f in logFilters:
    patterns = logFilters[f]
@@ -83,7 +96,8 @@ for f in logFilters:
      for p in patterns[1:] :
        cmd += (" | grep -v " + p)
    cmd += " > " + folder + f
-   print 'processing\n', cmd
+   if debug:
+     print 'processing\n', cmd
    os.system(cmd)
 print 'The following log files are filtered:'
 for f in logFilters:

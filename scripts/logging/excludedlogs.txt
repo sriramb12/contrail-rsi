@@ -1,6 +1,8 @@
 contrail-analytics-nodemgr-stdout.log
 contrail-config-nodemgr-stdout.log
 contrail-control-nodemgr-stdout.log
+/var/log/contrail/contrail-database-nodemgr-stdout.log
+/var/log/contrail/contrail-config-nodemgr-stdout.log
 contrail-database-nodemgr-stdout.log
 haproxy.log
 device-manager-zk.log
@@ -9,3 +11,5 @@ memcached.log
 opscenterd.log
 redis-server.log
 contrail-control-nodemgr-stderr.log
+/var/log/contrail/contrail-control-nodemgr-stderr.log
+/var/log/cassandra/debug.log
