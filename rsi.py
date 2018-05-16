@@ -154,7 +154,6 @@ else:
    server = sys.argv[1]
 
 targetfile=int(time.time() )
-print targetfile
 user = 'root'
 #Comment this line
 pwd = 'Juniper'

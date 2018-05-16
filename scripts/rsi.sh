@@ -17,6 +17,10 @@ echo Creating $outputDir >> $RSILOG
 
 mkdir $outputDir
 ERRLOG=$outputDir/err.txt
+
+
+
+echo processe $outputDir >> $RSILOG 
 function narrate()
 {
    echo $1 | tee -a $RSILOG $RUNLOG $ERRLOG $2 > /dev/null
@@ -95,7 +99,9 @@ narrate "Step 1.a: Get system information (applicable for any contrail node)"
      getCommonInfo
 
 narrate "Step 1.b: Fetch recent logs"
-  getLatestLogs $outputDir
+  `date` >> /tmp/log.log
+  cp $scriptDir/logging/*txt /tmp/
+  python $scriptDir/logging/processLogs.py $outputDir >> $RUNLOG
 
 narrate "Step 1.c: Fetch /etc/"
   getConfig

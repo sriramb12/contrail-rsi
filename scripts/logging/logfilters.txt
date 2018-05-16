@@ -10,5 +10,9 @@
 /var/log/cassandra/system.log: "INFO"
 /var/log/kafka/server.log: "Group Metadata Manager on Broker"
 /var/log/zookeeper/zookeeper.log: "Purge task"
-
+/var/log/contrail/api-0-zk.log: "Sending request", "Received Ping"
+/var/log/contrail/schema-zk.log: "Sending request", "Received Ping"
+/var/log/contrail/contrail-api-0-stdout.log: "Sending request", "Received Ping"
+/var/log/contrail/device-manager-zk.log: "Sending request", "Received Ping"
+/var/log/contrail/svc-monitor-zk.log: "Sending request", "Received Ping"
 /var/log/haproxy.log: "backend", "contrail-analytics-api contrail-analytics-api", "contrail-discovery contrail-discovery-backend"
