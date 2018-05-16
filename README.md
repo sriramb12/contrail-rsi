@@ -11,9 +11,11 @@ Requires :
 
    'pip' can be used to install above modules
 
+
 ####  Ex:
 
-      *pip install getpass paramiko scp*
+      __pip install getpass paramiko scp__
+  This means 'pip' is present !!
 
 Known Issues:
 
