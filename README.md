@@ -8,12 +8,12 @@ Requires :
 
   Tip: 'pip' can be used to install above modules
   Ex:
-      pip install getpass paramiko scp 
+`      pip install getpass paramiko scp `
 
 Known Issues
   Does NOT work on windows git-bash (use powershell instead)
 
 
-TODOs:
+##TODOs:
   1. print updates on progress of RSI (to show if it is working or hung)
   2. At times, the RSI session is getting hung
