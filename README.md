@@ -17,15 +17,32 @@ Requires :
 
 Known Issues:
 
-  Does NOT work on windows git-bash (use powershell instead)
+  1. Does NOT work on windows git-bash (use powershell instead)
+
+  2. At times, the RSI session is getting hung (no activity seen on contrail node)
 
 
 ## TODOs:
 
-  1. For better UX, After contrail-rsi is run, show progress of RSI (to show if it is working or hung)
+  * For better UX, After contrail-rsi is run, show progress of RSI (to show if it is working or hung)
 
-  2. At times, the RSI session is getting hung (no activity seen on contrail node)
+  * Add more commands to each module for a comprehensive set of module status outputs  *
+     Ex: add commands related to cassandra, zookeeper etc 
+
+   Configurabilty in Logs, better filters, more parameters to logging module 
+`      contrail-rsi/scripts/logging`
 
 ### Configuration:
-  It collects 
+  RSI tool is highly configurable to get relevant information from the node of interest 
+
+#### Node level RSI configuration:
+  Please take a look at: 
+`      contrail-rsi/scripts/<module> folders to customize`
+       Many commands need to be added which are usually requested from customer team
+
 #### Log configuration:
+  Contrail logs are volumious and rollover quickly. This tool enables JTAC Engineer to add some filters
+  Please take a look at 
+`      contrail-rsi/scripts/logging/logfilters.txt to add/edit/delete/ some filters`
+`      contrail-rsi/scripts/logging/excludedlogs.txt to add/edit/delete/ to change what log files can be omitted`
+  
