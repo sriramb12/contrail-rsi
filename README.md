@@ -7,13 +7,13 @@ Requires :
 
   python 2.7 and the python modules: getpass paramiko scp 
 
-###  Tip:
+#####  Install Tip:
 
    'pip' can be used to install above modules
 
-###  Ex:
+#####  Ex:
 
-`      pip install getpass paramiko scp `
+      _pip install getpass paramiko scp  _
 
 Known Issues:
 
@@ -24,12 +24,13 @@ Known Issues:
 
 ## TODOs:
 
-  * For better UX, After contrail-rsi is run, show progress of RSI (to show if it is working or hung)
+  * UX related:
+     During contrail-rsi run, show progress of RSI (to show if it is working or hung)
 
-  * Add more commands to each module for a comprehensive set of module status outputs  *
-     Ex: add commands related to cassandra, zookeeper etc 
+  * Add more commands to each module for a comprehensive set of module status outputs 
+     Ex: _add commands related to cassandra, zookeeper etc_
 
-   Configurabilty in Logs, better filters, more parameters to logging module 
+  * Configurabilty in Logs, better filters, more parameters to logging module 
 `      contrail-rsi/scripts/logging`
 
 ### Configuration:
