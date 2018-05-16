@@ -7,8 +7,12 @@ Requires :
 
   python 2.7 and the python modules: getpass paramiko scp 
 
-  Tip: 'pip' can be used to install above modules
-  Ex:
+###  Tip:
+
+   'pip' can be used to install above modules
+
+###  Ex:
+
 `      pip install getpass paramiko scp `
 
 Known Issues:
