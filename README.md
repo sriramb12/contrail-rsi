@@ -36,7 +36,7 @@ Known Issues:
 `      contrail-rsi/scripts/logging`
 
 ### Configuration:
-  RSI tool is highly configurable to get relevant information from the node of interest 
+  contrail-rsi is highly extensible and configurable to get relevant information from the node of interest 
 
 #### Node level RSI configuration:
   Please take a look at: 
@@ -46,6 +46,6 @@ Known Issues:
 #### Log configuration:
   Contrail logs are volumious and rollover quickly. This tool enables JTAC Engineer to add some filters
   Please take a look at 
-`      contrail-rsi/scripts/logging/logfilters.txt to add/edit/delete/ some filters`
-`      contrail-rsi/scripts/logging/excludedlogs.txt to add/edit/delete/ to change what log files can be omitted`
+`      contrail-rsi/scripts/logging/logfilters.txt ` to customize filters
+`      contrail-rsi/scripts/logging/excludedlogs.txt ` to add/edit/delete/  to change what log files can be omitted
   
