@@ -14,7 +14,7 @@ Requires :
 
 ####  Ex:
 
-      __pip install getpass paramiko scp__
+      *  install getpass paramiko scp * 
   This means 'pip' is present !!
 
 Known Issues:
