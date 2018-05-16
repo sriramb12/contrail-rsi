@@ -22,6 +22,10 @@ Known Issues:
 
 ## TODOs:
 
-  1. print updates on progress of RSI (to show if it is working or hung)
+  1. For better UX, After contrail-rsi is run, show progress of RSI (to show if it is working or hung)
 
-  2. At times, the RSI session is getting hung
+  2. At times, the RSI session is getting hung (no activity seen on contrail node)
+
+### Configuration:
+  It collects 
+#### Log configuration:
