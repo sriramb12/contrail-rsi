@@ -155,8 +155,9 @@ else:
 
 targetfile=int(time.time() )
 user = 'root'
+pwd = ''
 #Comment this line
-pwd = 'Juniper'
+#pwd = 'Juniper'
 if not pwd:
  pwd = getpass.getpass()
 print 'Warning: password is hardcoded! use getpass()'

@@ -1,10 +1,10 @@
 #It performs 3 operations
 # a. Omits specific log files 
-excludedFiles='/tmp/excludedlogs.txt'
+excludedFiles='excludedlogs.txt'
 #loganalysis-tbd.txt
 excludedFilesList =[]
 # b. Filters out unwanted logs from 
-filteredFiles='/tmp/logfilters.txt'
+filteredFiles='logfilters.txt'
 # c. generates a list of all logs in /var/logs 
 logFileList='allLogs.txt'
 # ALL output is written to the folder specified in the 1st (and only) argument 
@@ -45,8 +45,12 @@ except:
 logFilters = {}
 
 
-with open(filteredFiles) as f:
-    for line in f:
+try:
+ f = open(filteredFiles)
+except:
+ f = open('/tmp/' + filteredFiles)
+
+for line in f:
       if line[0] != '/':
           print 'ignoring ', line
           continue
@@ -54,8 +58,12 @@ with open(filteredFiles) as f:
       val=lst.split(',')
       logFilters[key] = val
 
-with open(excludedFiles) as f:
-  for exFile in f:
+try:
+ f = open(excludedFiles)
+except:
+ f = open('/tmp/' + excludedFiles)
+
+for exFile in f:
     excludedFilesList.append(exFile.rstrip('\n'))
 
 print excludedFilesList
@@ -76,14 +84,10 @@ for root, dirs, files in os.walk(prefix):
           sz = os.stat(l).st_size
           if  sz > logFileSizeThreshold and l not in logFilters.keys() and  l not in excludedFilesList:
            cmd = "cp " + l + " " + folder
-           if copyCount < 10:
-            os.system(cmd)
-            copyCount += 1
-
-          #  print cmd, "copied ", l
-            #if debug:
-            #os.system("ls -l " + l )
-        os.system("ls -l " + l + " >> " + Folder + logFileList)
+           print cmd, "copied ", l
+           os.system("ls -l " + l )
+           #raw_input()
+           #os.system(cmd)
 
 print 'number of files for copy:', len(logFileList)
 print 'number of filter files found ', len(filterLogFileList)
