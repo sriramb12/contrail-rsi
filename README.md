@@ -9,17 +9,6 @@ place for contrail-scripts useful for users, jtac
 
 It will download the tool to your system
 
-### Usage:
-  `cd contrail-rsi`
-
-  ./rsi.py <node-IP>
-##### Exmple:
-  ./rsi.py 10.219.90.82
-
-
-
-
-
 Requires :
 
   python 2.7 and the python modules: getpass paramiko scp 
@@ -32,6 +21,15 @@ Requires :
 ####  Ex:
 
 **pip install getpass paramiko scp** 
+
+
+### Usage:
+  `cd contrail-rsi`
+
+  ./rsi.py <node-IP>
+##### Exmple:
+  ./rsi.py 10.219.90.82
+
 
 Known Issues:
 
