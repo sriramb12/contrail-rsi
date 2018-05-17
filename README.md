@@ -5,7 +5,7 @@ place for contrail-scripts useful for users, jtac
 
 ### Installation:
 
-`git clone https://github.com/sriramb12/contrail-rsi`
+**git clone https://github.com/sriramb12/contrail-rsi**
 
 It will download the tool to your system
 
@@ -15,7 +15,7 @@ Requires :
 
 ####  Install Tip:
 
-   'pip' can be used to install above modules
+__'pip' can be used to install above modules__
 
 
 ####  Ex:
