@@ -13,3 +13,4 @@ redis-server.log
 contrail-control-nodemgr-stderr.log
 /var/log/contrail/contrail-control-nodemgr-stderr.log
 /var/log/cassandra/debug.log
+/var/log/contrail/contrail-vrouter-nodemgr-stdout.log

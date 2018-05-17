@@ -11,8 +11,18 @@ Requires :
 
    'pip' can be used to install above modules
 
+#### Usage:
+*./rsi.py <nodeIP>*
 
 ####  Ex:
+
+root@controller-1:~/contrail-rsi# ./rsi.py 10.219.90.76
+Password: 
+Warning: password is hardcoded! use getpass()
+logging to 10.219.90.76
+10.219.90.76 is a contrail node
+OK
+RSI saved to:  CFTSBM6CMP-1526539840.tgz
 
 **pip install getpass paramiko scp** 
 
