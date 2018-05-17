@@ -3,6 +3,23 @@ contrail-rsi is a python/bash-script tool to collect necessary information from 
 it is tested on Ubuntu Linux and Windows powershell
 place for contrail-scripts useful for users, jtac
 
+###Installation:
+
+`git clone https://github.com/sriramb12/contrail-rsi`
+
+It will download the tool to your system
+
+###Usage:
+  `cd contrail-rsi`
+
+  ./rsi.py <node-IP>
+#####Exmple:
+  ./rsi.py 10.219.90.82
+
+
+
+
+
 Requires :
 
   python 2.7 and the python modules: getpass paramiko scp 
