@@ -6,27 +6,22 @@ place for contrail-scripts useful for users, jtac
 ### Installation:
 
 **git clone https://github.com/sriramb12/contrail-rsi**
-
 It will download the tool to your system
 
 Requires :
-
   python 2.7 and the python modules: getpass paramiko scp 
 
-####  Install Tip:
-
+####  "   Install Tip:"
 __'pip' can be used to install above modules__
 
-
 ####  Ex:
-
 **pip install getpass paramiko scp** 
 
+### "   Usage:"
+   "   Navigate to the folder where 'rsi.py' is present "
+   "   `cd contrail-rsi`"
+   "   ./rsi.py [node-IP]"
 
-### Usage:
-  `cd contrail-rsi`
-
-  ./rsi.py [node-IP]
 ##### Exmple:
   ./rsi.py 10.219.90.82
 
@@ -34,7 +29,6 @@ __'pip' can be used to install above modules__
 Known Issues:
 
   1. Does NOT work on windows git-bash (use powershell instead)
-
   2. At times, the RSI session is getting hung (no activity seen on contrail node)
 
 
