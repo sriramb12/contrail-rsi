@@ -22,6 +22,7 @@ import paramiko
 from paramiko import SSHClient
 from scp import SCPClient
 
+rsiVersion=0.1
 
 archivedir='scripts'
 archive='scripts.tar'
@@ -154,6 +155,7 @@ else:
    server = sys.argv[1]
 
 targetfile=int(time.time() )
+print 'Contrail rsi version:', rsiVersion
 user = 'root'
 pwd = ''
 #Comment this line
