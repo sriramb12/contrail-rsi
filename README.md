@@ -25,21 +25,18 @@ __'pip' can be used to install above modules__
 ##### Exmple:
   ./rsi.py 10.219.90.82
 
-
 Known Issues:
-
   1. Does NOT work on windows git-bash (use powershell instead)
   2. At times, the RSI session is getting hung (no activity seen on contrail node)
 
-
 ## TODOs:
-
+  * Add introspect outputs
+  * RSI Analysis: Build analysis engine to figure out any anamolies in
+       configuration, logs, runtime data (using introspect outputs)
   * UX related:
      During contrail-rsi run, show progress of RSI (to show if it is working or hung)
-
   * Add more commands to each module for a comprehensive set of module status outputs 
      Ex: _add commands related to cassandra, zookeeper etc_
-
   * Configurabilty in Logs, better filters, more parameters to logging module 
 `      contrail-rsi/scripts/logging`
 
