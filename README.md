@@ -8,6 +8,7 @@ contrail-rsi is a collection of python/bash-scripts to gather necessary informat
 It will download the tool to your system
 
 Requires:
+  'root' access to the contrail-node
   python 2.7 and the python modules: getpass paramiko scp 
 
 ####     Install Tip:
@@ -26,6 +27,7 @@ Known Issues:
 
 ## TODOs:
   * Add introspect outputs
+  * Make it work for 'non-root' users as well. Need to log some contrail ER defects 
   * RSI Analysis: Build analysis engine to figure out any anamolies in
        configuration, logs, runtime data (using introspect outputs)
   * UX related:
