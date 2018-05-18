@@ -26,7 +26,7 @@ __'pip' can be used to install above modules__
 ### Usage:
   `cd contrail-rsi`
 
-  ./rsi.py <node-IP>
+  ./rsi.py \<node-IP\>
 ##### Exmple:
   ./rsi.py 10.219.90.82
 
