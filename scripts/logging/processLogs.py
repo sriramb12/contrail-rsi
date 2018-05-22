@@ -87,7 +87,7 @@ for root, dirs, files in os.walk(prefix):
            print cmd, "copied ", l
            os.system("ls -l " + l )
            #raw_input()
-           #os.system(cmd)
+           os.system(cmd)
 
 print 'number of files for copy:', len(logFileList)
 print 'number of filter files found ', len(filterLogFileList)

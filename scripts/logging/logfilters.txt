@@ -17,5 +17,5 @@
 /var/log/contrail/svc-monitor-zk.log: "Sending request", "Received Ping"
 /var/log/contrail/contrail-analytics-nodemgr-stderr.log: "Exception AssertionError", "wokeup", "apport"
 /var/log/haproxy.log: "backend", "contrail-analytics-api contrail-analytics-api", "contrail-discovery contrail-discovery-backend"
-
-contrail-vrouter-nodemgr-stderr.log: "AssertionError", "wokeup"
+/var/log/contrail/contrail-vrouter-nodemgr-stderr.log: "AssertionError", "wokeup"
+/var/log/zookeeper/zookeeper.log: "caught end", "client"
