@@ -1,3 +1,4 @@
+#Add any simple commands which can be directly executed
 dropstats
 top -d2 -n1 -b | head -12 
 vif --list
@@ -11,3 +12,9 @@ echo endof cmds
 curl http://localhost:8085/Snh_VrfListReq?name=
 sysctl -a
 dmesg
+
+lsof -i
+
+date
+curl localhost:8085
+date
