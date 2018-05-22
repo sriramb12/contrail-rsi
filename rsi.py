@@ -22,6 +22,7 @@ import paramiko
 from paramiko import SSHClient
 from scp import SCPClient
 
+rsiVersion=0.1
 
 archivedir='scripts'
 archive='scripts.tar'
@@ -146,6 +147,8 @@ if not checkScripts():
 user='root'
 server=''
 
+print 'contrail-rsi version:', rsiVersion
+print
 if len(sys.argv) < 2:
    print 'Enter Node FQDN/Address:',
    server = raw_input()
