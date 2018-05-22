@@ -163,7 +163,8 @@ pwd = ''
 #pwd = 'Juniper'
 if not pwd:
  pwd = getpass.getpass()
-print 'Warning: password is hardcoded! use getpass()'
+else:
+ print 'Warning: password is hardcoded! use getpass()'
 print 'logging to', server
 
 
