@@ -1,3 +1,7 @@
+#This file is used for specifying any log filters to omit noisy logs to
+#Add any log filter by specifying <logfile>: "filter1", "filter2",... "filterN"
+#comment out a filter by adding '#' or ' ' in begining of a line
+
 /var/log/cassandra/status.log: "run_command", "DEBUG"
 /var/log/contrail/ifmap-stdout.log: "SessionRepository", "TRACE", "DEBUG"
 /var/log/contrail/svc-monitor-zk.log: "Sending request", "Received Ping"
@@ -17,5 +21,6 @@
 /var/log/contrail/svc-monitor-zk.log: "Sending request", "Received Ping"
 /var/log/contrail/contrail-analytics-nodemgr-stderr.log: "Exception AssertionError", "wokeup", "apport"
 /var/log/haproxy.log: "backend", "contrail-analytics-api contrail-analytics-api", "contrail-discovery contrail-discovery-backend"
+/var/log/contrail/contrail-vrouter-agent.log: "Send FAILED"
 /var/log/contrail/contrail-vrouter-nodemgr-stderr.log: "AssertionError", "wokeup"
-/var/log/zookeeper/zookeeper.log: "caught end", "client"
+#zzz-vrouter-nodemgr-stderr.log: "AssertionError"

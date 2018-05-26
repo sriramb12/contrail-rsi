@@ -4,7 +4,7 @@ excludedFiles='excludedlogs.txt'
 #loganalysis-tbd.txt
 excludedFilesList =[]
 # b. Filters out unwanted logs from 
-filteredFiles='logfilters.txt'
+filterFile='logfilters.txt'
 # c. generates a list of all logs in /var/logs 
 logFileList='allLogs.txt'
 # ALL output is written to the folder specified in the 1st (and only) argument 
@@ -14,97 +14,102 @@ logFileList='allLogs.txt'
 # analyze logs (specific methods for a given log file)
 #  Ex: /var/log/haproxy.log has a lot of repetitive logs with different clients. can we crunch/summarize and learn?
 
-logFileSizeThreshold = 10*1024
+logFileSizeThreshold = 1000*1024
 import os
 import sys
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("-o", "--outdir", help="output folder")
+parser.add_argument("-i", "--indir", help="log folder")
+parser.add_argument("-d", "--debug", action='store_true', help="debug")
+args = parser.parse_args()
 
-def usage():
-  print "Usage:"
-  print "   python ", sys.argv[0], "-d <outputdir>"
-  print
-  exit(0)
 debug=False
-if len(sys.argv) < 2 or len(sys.argv) > 3:
-    usage()
-if len(sys.argv) == 2:
-    if sys.argv[1][0] == '-':
-      usage()
-    folder= sys.argv[1] + '/'
-    Folder= sys.argv[1] + '/'
-if len(sys.argv) > 2:
-    if sys.argv[1] != '-d':
-      usage()
-    folder= sys.argv[2] + '/'
-    Folder= sys.argv[2] + '/'
-    print "debug on"
-    debug = True
+if args.debug:
+ debug=True
+ 
+outdir='.'
+if args.outdir:
+ outdir=args.outdir
+ 
+indir='/var/log'
+if args.indir:
+ indir=args.indir
+
 try:
-  os.system("mkdir " + folder)
+  os.system("mkdir " + outdir)
 except:
   pass
+
 logFilters = {}
+filteredLogFiles =[]
 
-
-try:
- f = open(filteredFiles)
-except:
- f = open('/tmp/' + filteredFiles)
-
+f = open(filterFile)
+linenum=0
 for line in f:
-      if line[0] != '/':
-          print 'ignoring ', line
-          continue
-      (key, lst) = line.rstrip('\n').split(':')
-      val=lst.split(',')
-      logFilters[key] = val
+  linenum += 1
+  if line[0] is not '#' :
+      try:
+       (key, lst) = line.rstrip('\n').split(':')
+       val=(lst.split(','))
+       logFilters[key] = val
+       filteredLogFiles.append( key.split('/')[-1])
+      except:
+        if debug:
+         print 'ignoring line ', linenum
+        pass
+  else:
+        if debug:
+         print 'ignoring line ', linenum
+        
 
 try:
  f = open(excludedFiles)
-except:
- f = open('/tmp/' + excludedFiles)
 
-for exFile in f:
+ for exFile in f:
     excludedFilesList.append(exFile.rstrip('\n'))
 
-print excludedFilesList
+except:
+ if debug:
+   print 'no filters exist'
 
-prefix = "/var/log/"
-copyCount = 0
+logFileCount=1
 filterLogFileList=[]
-for root, dirs, files in os.walk(prefix):
-    folder= Folder
+for root, dirs, files in os.walk(indir):
+    folder= outdir
     folder += os.path.join(root, '')
     cmd = "mkdir -p " + folder 
     
     os.system(cmd)
     for logfile  in files:
-        f = logfile.split('/')[-1]
-        l = (os.path.join(root, logfile ))
-        if logfile .endswith(".log") :
-          sz = os.stat(l).st_size
-          if  sz > logFileSizeThreshold and l not in logFilters.keys() and  l not in excludedFilesList:
-           cmd = "cp " + l + " " + folder
-           print cmd, "copied ", l
-           os.system("ls -l " + l )
-           #raw_input()
+      if logfile .endswith(".log") :
+        f = logfile
+        lf = (os.path.join(root, logfile ))
+        if  debug and f in filteredLogFiles:
+           print "skipping ", f
+        if  f not in logFilters.keys() and  lf not in excludedFilesList:
+          sz = os.stat(lf).st_size
+          if  sz > logFileSizeThreshold:
+            print 'skipping ', lf, "size ", sz/(1024*1024), "M, is too big?"
+          if  sz < logFileSizeThreshold and lf not in logFilters.keys() and  lf not in excludedFilesList:
+           cmd = "cp " + lf + " " + folder
            os.system(cmd)
+           logFileCount+=1
 
-print 'number of files for copy:', len(logFileList)
-print 'number of filter files found ', len(filterLogFileList)
+print 'number of log files copied:', logFileCount
 
-
-folder= Folder
 count = 0
-for f in logFilters:
-   patterns = logFilters[f]
-   cmd = "grep -v " + patterns[0] + " " + f + ' | grep -v ^$ '
+for logfile in logFilters:
+   patterns = logFilters[logfile]
+   if not os.path.isfile(logfile): 
+     continue
+   print 'applying filters on ', logfile
+   cmd = "grep -v " + patterns[0] + " " + logfile + ' | grep -v ^$ '
    if len(patterns) > 1:
      for p in patterns[1:] :
        cmd += (" | grep -v " + p)
-   cmd += " > " + folder + f
+   cmd += " > " + outdir + logfile
    if debug:
-     print 'processing\n', cmd
+     print 'processing', cmd
    os.system(cmd)
-print 'The following log files are filtered:'
-for f in logFilters:
-   print f
+
