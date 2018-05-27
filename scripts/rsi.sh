@@ -81,7 +81,7 @@ while IFS= read -r cmd
 do
   narrate "Executing:$cmd" $out 
   narrate "==============" $out
-  $cmd 1>>$out  2>>$ERRLOG
+  sudo $cmd 1>>$out  2>>$ERRLOG
   echo  "....">> $out 
 done < $input.tmp
 rm $input.tmp
@@ -124,7 +124,7 @@ do
   date >> $file
   for cmdfile in `ls $scriptDir/$role/*.sh`
   do
-    bash $cmdfile $outputDir
+    bash sudo $cmdfile $outputDir
   done
   for cmdfile in `ls $scriptDir/$role/*cmds`
   do
