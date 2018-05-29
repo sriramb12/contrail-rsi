@@ -40,7 +40,7 @@ RSI saved to:  CFTSBM6CMP-1526539840.tgz
   ./rsi.py 10.219.90.82
 Known Issues:
   * Does NOT work on windows git-bash (use powershell instead)
-  * At times, the RSI session is getting hung (no activity seen on contrail node)
+  * On rare occassions, RSI session is returning with no data (no activity seen on contrail node for a minute)
 
 ## TODOs:
   * Add introspect outputs
