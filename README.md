@@ -13,7 +13,6 @@ Requires:
 
 ####     Install Tip:
 __'pip' can be used to install above modules__
-<<<<<<< HEAD
 
 #### Usage:
 *./rsi.py <nodeIP>*
@@ -29,8 +28,6 @@ OK
 RSI saved to:  CFTSBM6CMP-1526539840.tgz
 
 =======
-####  Ex:
->>>>>>> 803f7559af2b2fb7e5189aabf0fe5bf45c309dc6
 **pip install getpass paramiko scp** 
 ###    Usage:
       Navigate to the folder where 'rsi.py' is present 
