@@ -2,7 +2,8 @@
 contrail-rsi is a collection of python/bash-scripts to gather necessary information from a given contrail node, intended for contrail troubleshooting
 **Tested on Ubuntu Linux**
 
-A power point presentation is within the repo under doc/ folder here. Please take a look at it
+A power point presentation (contrail-rsi.pptx) is within the repo under doc/ folder here. Please take a look at it
+
 ### Installation:
 
 **git clone https://github.com/sriramb12/contrail-rsi**
