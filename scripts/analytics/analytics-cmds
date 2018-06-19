@@ -1,1 +1,1 @@
-contrail-logs --last 10
+sudo contrail-logs --last 10

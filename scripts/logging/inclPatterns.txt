@@ -1,0 +1,4 @@
+#This file is used for specifying any log filters to include important logs
+#Add any log filter by specifying <logfile>: "filter1", "filter2",... "filterN"
+#comment out a filter by adding '#' or ' ' in begining of a line
+/var/log/contrail/contrail-svc-monitor-stdout.log: " 500 "

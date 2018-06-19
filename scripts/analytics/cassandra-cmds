@@ -1,6 +1,6 @@
-nodetool describecluster
-nodetool gcstats
-nodetool gossipinfo
-nodetool netstats
-nodetool ring
-nodetool -h 127.0.0.1 info
+sudo nodetool describecluster
+sudo nodetool gcstats
+sudo nodetool gossipinfo
+sudo nodetool netstats
+sudo nodetool ring
+sudo nodetool -h 127.0.0.1 info

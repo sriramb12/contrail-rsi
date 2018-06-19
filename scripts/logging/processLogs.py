@@ -3,12 +3,16 @@
 excludedFiles='excludedlogs.txt'
 #loganalysis-tbd.txt
 excludedFilesList =[]
-# b. Filters out unwanted logs from 
-filterFile='logfilters.txt'
-# c. generates a list of all logs in /var/logs 
+
+# b. removes unwanted logs from 
+excFilterFile='exclPatterns.txt'
+
+# c. fetches only interesting logs
+incFilterFile='inclPatterns.txt'
+
+# d. generates a list of all logs in /var/logs 
 logFileList='allLogs.txt'
 # ALL output is written to the folder specified in the 1st (and only) argument 
-
 #TODO
 # use log file attributes (os.stat) to a greater extent (such as created time and so on)
 # analyze logs (specific methods for a given log file)
@@ -36,33 +40,74 @@ indir='/var/log'
 if args.indir:
  indir=args.indir
 
+def applyFilters(includeFlag, logFilters):
+ flag = '-v'
+ global debug
+ if includeFlag:
+   flag = ''
+ print 'applyFilters ', flag
+ for logfile in logFilters:
+   print logfile
+   patterns = logFilters[logfile]
+   if not os.path.isfile(logfile): 
+     continue
+   print 'applying filters on ', logfile
+   cmd = "grep  " + patterns[0] + " " + logfile + ' | grep  -v ^$ '
+   if len(patterns) > 1:
+    for p in patterns[1:] :
+      if not include:
+       cmd += (" | grep -v " + p)
+      else:
+       cmd += (" | grep -e " + p)
+   cmd += " > " + outdir + logfile
+   if debug:
+     print 'processing ', logfile, cmd
+   os.system(cmd)
+
 try:
   os.system("mkdir " + outdir)
 except:
   pass
 
-logFilters = {}
+inFilters = {}
+exFilters = {}
 filteredLogFiles =[]
 
-f = open(filterFile)
-linenum=0
-for line in f:
-  linenum += 1
-  if line[0] is not '#' :
-      try:
+def parseFilterFile(filterFile):
+#Parse custom log filter files and load into corresponding dictionary
+# It prepares a dict of include or exclude patterns 
+ global debug
+ if debug:
+   print 'parse filters', filterFile
+ f = open(filterFile)
+ logFilters = {}
+ linenum=0
+ for line in f:
+   linenum += 1
+   #print line
+   if line[0] is not '#' :
+     try:
        (key, lst) = line.rstrip('\n').split(':')
        val=(lst.split(','))
        logFilters[key] = val
+       print line
        filteredLogFiles.append( key.split('/')[-1])
-      except:
-        if debug:
-         print 'ignoring line ', linenum
-        pass
-  else:
-        if debug:
-         print 'ignoring line ', linenum
-        
+     except:
+       if True:
+         print 'Exception: ignoring line ', linenum, line
+       continue
+   else:
+      if debug:
+         print 'IGnoring line ', linenum , line
+      continue
+ print logFilters
+ return logFilters
 
+inFilters = parseFilterFile(incFilterFile)
+exFilters = parseFilterFile(excFilterFile)
+
+print inFilters
+print filteredLogFiles
 try:
  f = open(excludedFiles)
 
@@ -74,7 +119,6 @@ except:
    print 'no filters exist'
 
 logFileCount=1
-filterLogFileList=[]
 for root, dirs, files in os.walk(indir):
     folder= outdir
     folder += os.path.join(root, '')
@@ -85,31 +129,19 @@ for root, dirs, files in os.walk(indir):
       if logfile .endswith(".log") :
         f = logfile
         lf = (os.path.join(root, logfile ))
-        if  debug and f in filteredLogFiles:
+        if  f in filteredLogFiles:
+          print f
+          if debug:
            print "skipping ", f
-        if  f not in logFilters.keys() and  lf not in excludedFilesList:
+        if  f not in inFilters.keys() and f not in exFilters.keys() and  lf not in excludedFilesList:
           sz = os.stat(lf).st_size
           if  sz > logFileSizeThreshold:
-            print 'skipping ', lf, "size ", sz/(1024*1024), "M, is too big?"
-          if  sz < logFileSizeThreshold and lf not in logFilters.keys() and  lf not in excludedFilesList:
+            print 'Skipping ', lf, "size ", sz/(1024*1024), "M, is too big?"
+          if  sz < logFileSizeThreshold and  lf not in excludedFilesList:
            cmd = "cp " + lf + " " + folder
            os.system(cmd)
            logFileCount+=1
 
 print 'number of log files copied:', logFileCount
-
-count = 0
-for logfile in logFilters:
-   patterns = logFilters[logfile]
-   if not os.path.isfile(logfile): 
-     continue
-   print 'applying filters on ', logfile
-   cmd = "grep -v " + patterns[0] + " " + logfile + ' | grep -v ^$ '
-   if len(patterns) > 1:
-     for p in patterns[1:] :
-       cmd += (" | grep -v " + p)
-   cmd += " > " + outdir + logfile
-   if debug:
-     print 'processing', cmd
-   os.system(cmd)
-
+applyFilters(True, inFilters)
+#applyFilters(False, exFilters)
